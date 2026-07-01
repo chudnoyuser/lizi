@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>для тебя малыш</title>
+    <style>
+        :root {
+            --bg-base: #fef5f0;
+            --bg-soft: #fdf0f3;
+            --bg-blush: #fce8ec;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-primary: #4a3040;
+            --text-secondary: #6b4d5d;
+            --accent-rose: #d48190;
+            --accent-rose-light: #e8b4bf;
+            --accent-rose-dark: #b85d6f;
+            --accent-peach: #f0c4b0;
+            --accent-cream: #fff8f5;
+            --shadow-soft: 0 4px 20px rgba(180, 120, 140, 0.12);
+            --shadow-medium: 0 8px 35px rgba(180, 120, 140, 0.18);
+            --shadow-glow: 0 0 40px rgba(220, 150, 170, 0.35);
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --radius-xl: 36px;
+            --font-main: 'Georgia', 'Times New Roman', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: linear-gradient(170deg, #fef7f2 0%, #fdf0f3 25%, #fce4e9 50%, #fef5f0 75%, #fdf0f4 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============ FLOATING HEARTS BACKGROUND ============ */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -60px;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+            font-size: 1.4rem;
+            filter: blur(0.4px);
+            will-change: transform, opacity;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.4);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.7;
+            }
+            40% {
+                opacity: 0.55;
+            }
+            75% {
+                opacity: 0.25;
+            }
+            100% {
+                transform: translateY(-110vh) translateX(80px) rotate(25deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatUpAlt {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.35);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.65;
+            }
+            45% {
+                opacity: 0.5;
+            }
+            80% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-105vh) translateX(-70px) rotate(-20deg) scale(1.05);
+                opacity: 0;
+            }
+        }
+
+        /* ============ MAIN LAYOUT: SEPARATE BLOCKS ============ */
+        .page-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 20px 60px;
+            gap: 50px;
+        }
+
+        .section-block {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .block-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(220, 160, 175, 0.4);
+            border-radius: var(--radius-xl);
+            padding: 34px 28px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            width: 100%;
+            transition: box-shadow 0.4s ease;
+        }
+
+        .block-card:hover {
+            box-shadow: var(--shadow-medium);
+        }
+
+        .block-title {
+            font-size: 1.5rem;
+            color: #5a3d4a;
+            letter-spacing: 0.03em;
+            font-weight: 400;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .block-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d48190, transparent);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ============ HERO SECTION (1st block) ============ */
+        .hero-title-main {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: 0.02em;
+            margin-bottom: 10px;
+        }
+
+        .hero-title-main .name {
+            display: inline-block;
+            background: linear-gradient(135deg, #c96a7c, #a34f60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            color: #8b6b78;
+            font-size: 1.05rem;
+            letter-spacing: 0.03em;
+            line-height: 1.5;
+        }
+
+        /* ============ COMPLIMENTS SECTION (2nd block) ============ */
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .buttons-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+
+        .compliment-btn {
+            position: relative;
+            padding: 16px 10px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            letter-spacing: 0.03em;
+            color: #fff;
+            font-weight: 500;
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            box-shadow: 0 3px 12px rgba(180, 120, 140, 0.15);
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            min-height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .compliment-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease-out, height 0.6s ease-out;
+        }
+
+        .compliment-btn:active::before {
+            width: 350px;
+            height: 350px;
+        }
+
+        .compliment-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(180, 120, 140, 0.25);
+        }
+
+        .compliment-btn:active {
+            transform: scale(0.96);
+            transition: transform 0.1s;
+        }
+
+        .compliment-btn.clicked {
+            transform: scale(0.94);
+            opacity: 0.8;
+            box-shadow: 0 2px 8px rgba(180, 120, 140, 0.2);
+        }
+
+        .btn-1 {
+            background: linear-gradient(135deg, #e8a4b3, #d48190);
+        }
+        .btn-2 {
+            background: linear-gradient(135deg, #e8b4a0, #d4957a);
+        }
+        .btn-3 {
+            background: linear-gradient(135deg, #d4a0b8, #c4829e);
+        }
+        .btn-4 {
+            background: linear-gradient(135deg, #e0afb8, #cc8d99);
+        }
+        .btn-5 {
+            background: linear-gradient(135deg, #e8b8b0, #d49a8e);
+        }
+        .btn-6 {
+            background: linear-gradient(135deg, #e4a8b6, #cf8596);
+        }
+        .btn-7 {
+            background: linear-gradient(135deg, #e8aea4, #d48d82);
+        }
+        .btn-8 {
+            background: linear-gradient(135deg, #e0a0b5, #c97d94);
+        }
+
+        .btn-emoji {
+            margin-right: 6px;
+            font-size: 1.1rem;
+        }
+
+        /* ============ REVEAL BUTTON (inside compliments block) ============ */
+        .reveal-btn {
+            display: inline-block;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #c96a7c, #a84d60);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-family: var(--font-main);
+            font-size: 1.15rem;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(180, 90, 110, 0.4);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            animation: pulseReveal 2.6s ease-in-out infinite;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .reveal-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%,
+            100% {
+                transform: translate(-20%, -20%) rotate(0deg);
+            }
+            50% {
+                transform: translate(20%, 20%) rotate(15deg);
+            }
+        }
+
+        @keyframes pulseReveal {
+            0%,
+            100% {
+                box-shadow: 0 6px 25px rgba(180, 90, 110, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 12px 40px rgba(180, 90, 110, 0.6);
+                transform: scale(1.04);
+            }
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 14px 40px rgba(180, 90, 110, 0.55);
+        }
+
+        .reveal-btn:active {
+            transform: scale(0.94);
+            transition: transform 0.15s;
+        }
+
+        /* ============ INVITATION BLOCK (3rd block, initially hidden) ============ */
+        .invitation-block {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 1.1s cubic-bezier(0.22, 0.61, 0.36, 1),
+                opacity 0.8s ease-out 0.2s,
+                margin 0.7s ease-out;
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            margin-top: 0;
+        }
+
+        .invitation-block.visible {
+            max-height: 1400px;
+            opacity: 1;
+            margin-top: 10px;
+            transition: max-height 1.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+                opacity 0.9s ease-out 0.3s,
+                margin 0.7s ease-out;
+        }
+
+        .invitation-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 2px solid rgba(220, 160, 175, 0.6);
+            border-radius: var(--radius-xl);
+            padding: 35px 28px;
+            box-shadow: var(--shadow-glow);
+            text-align: center;
+            width: 100%;
+            animation: cardReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+
+        @keyframes cardReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 4px solid #e8b4bf;
+            box-shadow: 0 0 0 8px rgba(220, 160, 180, 0.2),
+                0 0 0 16px rgba(220, 160, 180, 0.1),
+                0 8px 28px rgba(180, 120, 140, 0.3);
+            background: linear-gradient(135deg, #fce4e9, #f8d5dc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+
+        .photo-frame:hover {
+            box-shadow: 0 0 0 8px rgba(220, 160, 180, 0.35),
+                0 0 0 16px rgba(220, 160, 180, 0.2),
+                0 12px 40px rgba(180, 120, 140, 0.45);
+            transform: scale(1.04);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .speech-text {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #4a3040;
+            letter-spacing: 0.03em;
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        .speech-text .highlight {
+            display: inline;
+            background: linear-gradient(180deg, transparent 60%, #fce0e6 60%);
+            padding: 0 2px;
+        }
+
+        .speech-signature {
+            margin-top: 16px;
+            font-style: italic;
+            color: #8b6b78;
+            font-size: 0.98rem;
+            letter-spacing: 0.04em;
+        }
+
+        .response-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .response-btn {
+            padding: 13px 28px;
+            border-radius: 50px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            border: 2px solid #d48190;
+            background: #fff;
+            color: #b85d6f;
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            box-shadow: var(--shadow-soft);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .response-btn:hover {
+            background: #fef5f7;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            border-color: #b85d6f;
+        }
+
+        .response-btn:active {
+            transform: scale(0.94);
+            transition: transform 0.12s;
+        }
+
+        .response-btn.celebrated {
+            background: linear-gradient(135deg, #fce4e9, #f8d0d9);
+            border-color: #c96a7c;
+            animation: celebrateBtn 0.7s ease-out;
+        }
+
+        @keyframes celebrateBtn {
+            0% {
+                transform: scale(1);
+            }
+            40% {
+                transform: scale(1.12);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ============ TOASTS & CELEBRATIONS ============ */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+            width: 90%;
+            max-width: 500px;
+            align-items: center;
+        }
+
+        .toast {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid rgba(220, 160, 175, 0.45);
+            border-radius: var(--radius-lg);
+            padding: 16px 24px;
+            box-shadow: var(--shadow-medium);
+            font-size: 1rem;
+            color: #4a3040;
+            letter-spacing: 0.03em;
+            text-align: center;
+            line-height: 1.45;
+            animation: toastIn 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 100%;
+        }
+
+        .toast.removing {
+            animation: toastOut 0.4s ease-in forwards;
+        }
+
+        @keyframes toastIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.85);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(4px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes toastOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.9);
+            }
+        }
+
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .celebration-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: burstHeart 2.5s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes burstHeart {
+            0% {
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+                opacity: 1;
+            }
+            30% {
+                opacity: 1;
+                transform: translate(var(--dx), var(--dy)) scale(1.4) rotate(var(--rot));
+            }
+            100% {
+                transform: translate(var(--dx-end), var(--dy-end)) scale(0.1) rotate(var(--rot-end));
+                opacity: 0;
+            }
+        }
+
+        .big-celebration-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 1001;
+            pointer-events: none;
+            font-size: 2.5rem;
+            text-align: center;
+            animation: popInBig 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            color: #b85d6f;
+            text-shadow: 0 4px 20px rgba(200, 120, 140, 0.5);
+            letter-spacing: 0.04em;
+        }
+
+        @keyframes popInBig {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(-10deg);
+                opacity: 0;
+            }
+            60% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(3deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .sparkle-particle {
+            position: absolute;
+            pointer-events: none;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkle 0.7s ease-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--sx), var(--sy)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .scroll-hint {
+            color: #c0a0aa;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            animation: fadeHint 2.5s ease-in-out infinite;
+            margin-top: 4px;
+        }
+
+        @keyframes fadeHint {
+            0%,
+            100% {
+                opacity: 0.45;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #b8a0a8;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 480px) {
+            .hero-title-main {
+                font-size: 1.7rem;
+            }
+            .compliment-btn {
+                font-size: 0.8rem;
+                padding: 14px 6px;
+                min-height: 46px;
+            }
+            .reveal-btn {
+                font-size: 1rem;
+                padding: 14px 28px;
+            }
+            .invitation-card {
+                padding: 24px 16px;
+            }
+            .photo-frame {
+                width: 130px;
+                height: 130px;
+            }
+            .speech-text {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== FLOATING HEARTS ==================== -->
+    <div class="hearts-container" id="heartsContainer" aria-hidden="true"></div>
+
+    <!-- ==================== TOAST CONTAINER ==================== -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- ==================== PAGE STRUCTURE ==================== -->
+    <div class="page-wrapper">
+
+        <!-- 1️⃣ БЛОК ПРИВЕТСТВИЯ -->
+        <section class="section-block" id="blockHero">
+            <div class="block-card">
+                <p style="font-size:0.9rem; color:#b85d6f; letter-spacing:0.05em; margin-bottom:8px;">✨ послание от саши вредного ✨</p>
+                <h1 class="hero-title-main">
+                    привет, <span class="name">малыш</span> 
+                </h1>
+                <p class="hero-subtitle">
+                    я завайбкодил этот сайт для тебя пока скучал.<br>
+                    он разделен на главы
+                </p>
+            </div>
+        </section>
+
+        <!-- 2️⃣ БЛОК КОМПЛИМЕНТОВ (игра) -->
+        <section class="section-block" id="blockCompliments">
+            <div class="block-card">
+                <span class="block-title">тыктыктык- тыкай</span>
+                <p style="color:#8b6b78; margin-bottom:14px; font-size:0.95rem;">нажимай на кнопки – каждая скажет.</p>
+                <div class="buttons-grid" id="buttonsGrid">
+                    <button class="compliment-btn btn-1" data-compliment="ты самая лучшая ☀️" data-emoji="😊"><span class="btn-emoji"></span> моя головая считает</button>
+                    <button class="compliment-btn btn-2" data-compliment="ты самая красивая девушка на свете " data-emoji="🌷"><span class="btn-emoji"></span> мои глаза видят</button>
+                    <button class="compliment-btn btn-3" data-compliment="приятные ощущения" data-emoji=""><span class="btn-emoji"></span> мои руки чувствуют</button>
+                    <button class="compliment-btn btn-4" data-compliment="восхитительна 🌈" data-emoji=""><span class="btn-emoji"></span> твоя игра в доту</button>
+                    <button class="compliment-btn btn-5" data-compliment="твои глаза — очень красивые я восхищаюсьб " data-emoji="💙"><span class="btn-emoji"></span> глаза</button>
+                    <button class="compliment-btn btn-6" data-compliment="я очень счастлитв" data-emoji="💕"><span class="btn-emoji"></span> счастье</button>
+                    <button class="compliment-btn btn-7" data-compliment="рядом с тобой время летит капец" data-emoji="⌛"><span class="btn-emoji"></span> мгновения</button>
+                    <button class="compliment-btn btn-8" data-compliment="ты даришь тепло каждый день жаль что не с утра и не рядом 🔥" data-emoji="❤️"><span class="btn-emoji"></span> тепло</button>
+                </div>
+                <p class="scroll-hint">нажимай смело – их много 😊</p>
+                <button class="reveal-btn" id="revealBtn"> пукпупукпкупку</button>
+            </div>
+        </section>
+
+        <!-- 3️⃣ БЛОК ПРИГЛАШЕНИЯ (скрыт до нажатия) -->
+        <section class="invitation-block" id="invitationBlock">
+            <div class="invitation-card" id="invitationCard">
+                <!-- ФОТО: ЗАМЕНИ НА СВОЁ НАСТОЯЩЕЕ ФОТО -->
+                <div class="photo-frame" id="photoFrame">
+                    <img src="my-photo.jpg" alt="Моё фото" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+
+                <div class="speech-text">
+                    <p><span class="highlight">лизи</span>, с того самого момента, как ты появилась в моей жизни, мир стал другим — более <strong>тёплым</strong>, <strong>ярким</strong> и <strong>крутым</strong>.</p>
+                    <p style="margin-top:12px;">твоя красота — не только снаружи, но и внутри. рядом с тобой хочется быть лучше... </p>
+                    <p style="margin-top:12px;">я хочу пригласить тебя на <strong>особенное свидание</strong>.. только мы вдвоём и лапша.</p>
+                    <p style="margin-top:14px; font-size:1.15rem;"><strong>ты согласна провести свидание в пятерочке со мной? </strong></p>
+                </div>
+
+                <p class="speech-signature">— твой саша вредный 💕</p>
+
+                <div class="response-buttons">
+                    <button class="response-btn" id="btnYes" data-response="yes"> дааааааааа!</button>
+                    <button class="response-btn" id="btnOfCourse" data-response="ofcourse"> конечно, дааааааа</button>
+                </div>
+            </div>
+        </section>
+
+        <p class="footer-note">завайбодил от души для самой лучшей малышки</p>
+    </div>
+
+    <!-- ==================== CELEBRATION OVERLAY ==================== -->
+    <div class="celebration-overlay" id="celebrationOverlay" aria-hidden="true"></div>
+
+    <script>
+        (function() {
+            // DOM элементы
+            const heartsContainer = document.getElementById('heartsContainer');
+            const toastContainer = document.getElementById('toastContainer');
+            const buttonsGrid = document.getElementById('buttonsGrid');
+            const revealBtn = document.getElementById('revealBtn');
+            const invitationBlock = document.getElementById('invitationBlock');
+            const celebrationOverlay = document.getElementById('celebrationOverlay');
+            const btnYes = document.getElementById('btnYes');
+            const btnOfCourse = document.getElementById('btnOfCourse');
+
+            // Плавающие сердечки
+            const heartEmojis = ['💕', '💖', '💗', '💝', '🩷', '💓', '✨', '🌸', '🫧', '💐'];
+
+            function createFloatingHeart() {
+                const heart = document.createElement('span');
+                heart.classList.add('floating-heart');
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 95 + '%';
+                heart.style.fontSize = (Math.random() * 1.4 + 0.7) + 'rem';
+                heart.style.animationDuration = (Math.random() * 14 + 10) + 's';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                if (Math.random() > 0.5) heart.style.animationName = 'floatUpAlt';
+                heartsContainer.appendChild(heart);
+                const duration = parseFloat(heart.style.animationDuration) + parseFloat(heart.style.animationDelay);
+                setTimeout(() => { if (heart.parentNode) heart.remove(); }, duration * 1000 + 2000);
+            }
+
+            for (let i = 0; i < 18; i++) setTimeout(() => createFloatingHeart(), i * 400);
+            setInterval(() => { if (heartsContainer.children.length < 25) createFloatingHeart(); }, 2500);
+
+            // Тосты
+            function showToast(message, emoji) {
+                const currentToasts = toastContainer.querySelectorAll('.toast:not(.removing)');
+                if (currentToasts.length >= 4) {
+                    const oldest = currentToasts[0];
+                    oldest.classList.add('removing');
+                    setTimeout(() => oldest.remove(), 400);
+                }
+                const toast = document.createElement('div');
+                toast.classList.add('toast');
+                toast.innerHTML = `<span style="font-size:1.5rem;">${emoji || '💖'}</span> ${message}`;
+                toastContainer.appendChild(toast);
+                const removeTimer = setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.classList.add('removing');
+                        setTimeout(() => { if (toast.parentNode) toast.remove(); }, 400);
+                    }
+                }, 3500);
+                toast.addEventListener('click', () => {
+                    clearTimeout(removeTimer);
+                    toast.classList.add('removing');
+                    setTimeout(() => { if (toast.parentNode) toast.remove(); }, 400);
+                });
+            }
+
+            // Искры на кнопках
+            function createSparkles(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                for (let i = 0; i < 10; i++) {
+                    const particle = document.createElement('span');
+                    particle.classList.add('sparkle-particle');
+                    const angle = (Math.PI * 2 * i) / 10;
+                    const distance = 25 + Math.random() * 30;
+                    const sx = Math.cos(angle) * distance;
+                    const sy = Math.sin(angle) * distance;
+                    particle.style.cssText = `
+                            left: ${centerX}px; top: ${centerY}px;
+                            --sx: ${sx}px; --sy: ${sy}px;
+                            width: ${4 + Math.random()*6}px; height: ${4 + Math.random()*6}px;
+                            position: fixed; z-index: 1002; pointer-events: none;
+                            background: ${Math.random()>0.5 ? '#fff' : '#f8d5dc'};
+                            border-radius: 50%;
+                            animation: sparkle ${0.5+Math.random()*0.6}s ease-out forwards;
+                        `;
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 800);
+                }
+            }
+
+            // Обработчики кнопок комплиментов
+            const complimentButtons = buttonsGrid.querySelectorAll('.compliment-btn');
+            complimentButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const compliment = this.getAttribute('data-compliment');
+                    const emoji = this.getAttribute('data-emoji');
+                    showToast(compliment, emoji);
+                    createSparkles(this);
+                    this.classList.add('clicked');
+                    setTimeout(() => this.classList.remove('clicked'), 200);
+                    if (!this.dataset.clickedBefore) {
+                        this.dataset.clickedBefore = 'true';
+                        this.style.opacity = '0.85';
+                        const check = document.createElement('span');
+                        check.style.cssText = 'position:absolute;top:6px;right:10px;font-size:0.7rem;opacity:0.8;';
+                        check.textContent = '✓';
+                        this.appendChild(check);
+                    }
+                });
+            });
+
+            // Раскрытие приглашения
+            let revealed = false;
+            revealBtn.addEventListener('click', function() {
+                if (revealed) return;
+                revealed = true;
+                this.style.opacity = '0';
+                this.style.transform = 'scale(0.8)';
+                this.style.pointerEvents = 'none';
+                this.style.transition = 'all 0.5s ease-in';
+                setTimeout(() => { this.style.display = 'none'; }, 500);
+
+                setTimeout(() => {
+                    invitationBlock.classList.add('visible');
+                    setTimeout(() => {
+                        invitationBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 400);
+                }, 350);
+
+                createSparkles(revealBtn);
+                setTimeout(() => createSparkles(revealBtn), 150);
+                setTimeout(() => showToast('фууууууу пукпукпукпук', ''), 600);
+            });
+
+            // Празднование ответа
+            function triggerCelebration(buttonEl) {
+                buttonEl.classList.add('celebrated');
+                setTimeout(() => buttonEl.classList.remove('celebrated'), 700);
+                const rect = buttonEl.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const burstEmojis = ['💖','💕','💗','💝','✨','🌸','🎉','💐','🩷','💓','🌟','🥰','💘','🫶'];
+                for (let i = 0; i < 45; i++) {
+                    const heart = document.createElement('span');
+                    heart.classList.add('celebration-heart');
+                    heart.textContent = burstEmojis[Math.floor(Math.random() * burstEmojis.length)];
+                    const angle = (Math.PI * 2 * i) / 45 + (Math.random() - 0.5) * 0.4;
+                    const distance = 60 + Math.random() * 180;
+                    const dx = Math.cos(angle) * distance;
+                    const dy = Math.sin(angle) * distance - 50;
+                    const dxEnd = dx * (1.6 + Math.random() * 1.5);
+                    const dyEnd = dy + 120 + Math.random() * 200;
+                    const rot = (Math.random() - 0.5) * 400;
+                    const rotEnd = rot + (Math.random() - 0.5) * 500;
+                    const size = 1.2 + Math.random() * 2.2;
+                    heart.style.cssText = `
+                            left: ${cx}px; top: ${cy}px;
+                            font-size: ${size}rem;
+                            --dx: ${dx}px; --dy: ${dy}px;
+                            --dx-end: ${dxEnd}px; --dy-end: ${dyEnd}px;
+                            --rot: ${rot}deg; --rot-end: ${rotEnd}deg;
+                            animation-duration: ${2+Math.random()*2.5}s;
+                            animation-delay: ${Math.random()*0.3}s;
+                        `;
+                    celebrationOverlay.appendChild(heart);
+                    setTimeout(() => heart.remove(), 3000);
+                }
+                const bigText = document.createElement('div');
+                bigText.classList.add('big-celebration-text');
+                bigText.textContent = 'ты меня загостила 🎉💖';
+                document.body.appendChild(bigText);
+                setTimeout(() => {
+                    bigText.style.opacity = '0';
+                    bigText.style.transition = 'opacity 0.8s ease-out';
+                    setTimeout(() => bigText.remove(), 800);
+                }, 2000);
+                setTimeout(() => showToast('я обещаю сделать этот вечер лапшычным ', '💍'), 800);
+            }
+
+            btnYes.addEventListener('click', function() { triggerCelebration(this); });
+            btnOfCourse.addEventListener('click', function() { triggerCelebration(this); });
+
+            // Дополнительные сердечки после загрузки
+            setTimeout(() => { for (let i = 0; i < 8; i++) setTimeout(() => createFloatingHeart(), i * 300); }, 1500);
+        })();
+    </script>
+</body>
+</html>
